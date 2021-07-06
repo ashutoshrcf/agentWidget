@@ -3,18 +3,17 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>LP Widget</title>
+	<title>Test Widget</title>
 	<script src="https://lpcdn.lpsnmedia.net/webagent/client-SDK.min.js"></script>
 	<script>lpTag.agentSDK.init();</script>
 	<style>
 		body {
-			background-color: #fff;
+			background-color: #F8F9F9;
 		}
 	</style>
 </head>
 <body>
-	<h1>LP Integration</h1>
-	<p><a id="dynamicLink" href="#" target="_blank">C4C Link</a></p>
+	<h2> Exception Handling </h2>
 	<p><button id="getChatInfo">Get chat info</button></p>
 	<p><button id="getChattingAgentInfo">Get chatting agent info</button></p>
 	<p><button id="getAgentInfo">Get agent info</button></p>
@@ -33,9 +32,6 @@
 		const placeForChatData = document.querySelector('#placeForChatData');
 		const customerId = new URLSearchParams(window.location.search).get('customerId');
 		const pathToData = 'chatTranscript.lines';
-		
-		const dynamicLink = document.querySelector('#dynamicLink');
-		dynamicLink.href = `https://test/customerId/${customerId}`;
 		
 		const getChatDataBtn = document.querySelector('#getChatData');
 		getChatDataBtn.addEventListener('click', getChatBtnClickHandler);
