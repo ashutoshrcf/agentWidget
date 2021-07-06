@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>LP Widget</title>
+	<script src="https://lpcdn.lpsnmedia.net/webagent/client-SDK.min.js"></script>
+	<script>lpTag.agentSDK.init();</script>
+	<style>
+		body {
+			background-color: #fff;
+		}
+	</style>
+</head>
+<body>
+	<h1>LP Integration</h1>
+	<p><a id="dynamicLink" href="#" target="_blank">C4C Link</a></p>
+	<p><button id="getChatInfo">Get chat info</button></p>
+	<p><button id="getChattingAgentInfo">Get chatting agent info</button></p>
+	<p><button id="getAgentInfo">Get agent info</button></p>
+	<p><button id="getChatData">Get Chat Data</button></p>
+	<p><button id="getPersonalInfo">Get personal info</button></p>
+
+	<p><button id="getVisitorInfo">Get visitor info</button></p>
+	<p id="placeForChatData"></p>
+	<script>
+		// IMPORTANT!
+		// This widget is hosted in a public repository in order to make it accessible
+		// in the Agent Workspace. It seems only public repos can use the Github pages 
+		// feature which we need to create a link to this widget to be used in LP.
+		// DO NOT put any sensitive or company specific information in this code.
+
+		const placeForChatData = document.querySelector('#placeForChatData');
+		const customerId = new URLSearchParams(window.location.search).get('customerId');
+		const pathToData = 'chatTranscript.lines';
+		
+		const dynamicLink = document.querySelector('#dynamicLink');
+		dynamicLink.href = `https://test/customerId/${customerId}`;
+		
+		const getChatDataBtn = document.querySelector('#getChatData');
+		getChatDataBtn.addEventListener('click', getChatBtnClickHandler);
+		
+		const getPersonalInfoBtn = document.querySelector('#getPersonalInfo');
+		getPersonalInfoBtn.addEventListener('click', getPersonalInfoBtnClickHandler);
+		
+		const getAgentInfoBtn = document.querySelector('#getAgentInfo');
+		getAgentInfoBtn.addEventListener('click', getAgentInfoBtnClickHandler);
+		
+		const getChatInfoBtn = document.querySelector('#getChatInfo');
+		getChatInfoBtn.addEventListener('click', getChatInfoBtnClickHandler);
+		
+		const getVisitorInfoBtn = document.querySelector('#getVisitorInfo');
+		getVisitorInfoBtn.addEventListener('click', getVisitorInfoBtnClickHandler);
+		
+		const getChattingAgentInfoBtn = document.querySelector('#getChattingAgentInfo');
+		getChattingAgentInfoBtn.addEventListener('click', getChattingAgentInfoBtnClickHandler);
+		
+		function getChattingAgentInfoBtnClickHandler (e) {
+			lpTag.agentSDK.get('chattingAgentInfo', data => {
+				console.log(data);
+			}, onError);
+		}
+		
+		function getVisitorInfoBtnClickHandler (e) {
+			lpTag.agentSDK.get('visitorInfo', data => {
+				console.log(data);
+			}, onError);
+		}
+		
+		function getChatInfoBtnClickHandler (e) {
+			lpTag.agentSDK.get('chatInfo', data => {
+				console.log(data);
+			}, onError);
+		}
+
+		function getChatBtnClickHandler(e) {
+			lpTag.agentSDK.get(pathToData, onSuccess, onError);
+		}
+		
+		function getPersonalInfoBtnClickHandler(e) {
+			lpTag.agentSDK.get('SDE.personalInfo', data => {
+				console.log(data)
+			}, onError);
+		}
+		
+		function getAgentInfoBtnClickHandler(e) {
+			lpTag.agentSDK.get('agentInfo', data => {
+				console.log(data)
+			}, onError);
+			
+			lpTag.agentSDK.get('chattingAgentInfo', data => {
+				console.log(data);
+			}, onError);
+		}
+		
+		function onSuccess(data) {
+			console.log(data);
+			
+			let content = '';
+
+			data.forEach(line => {
+				content+= '<p>By: ' + line.by + '<br>Time: ' + line.time + '<br>Text: ' + line.text + '</p>';
+			});
+
+			placeForChatData.innerHTML = content;
+		};
+
+		function onError(err) {
+			console.log(err);
+		};
+	</script>
+</body>
+</html>
