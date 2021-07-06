@@ -1,51 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Test Widget</title>
-	<script src="https://lpcdn.lpsnmedia.net/webagent/client-SDK.min.js"></script>
-	<script>lpTag.agentSDK.init();</script>
-	<style>
-		body {
-			background-color: #F8F9F9;
-		}
-	</style>
-</head>
-<body>
-	<h2> Exception Handling </h2>
-	<p><button id="getErrorMessages">Get Error Messages</button></p>
-	<p id="placeForChatData"></p>
-	<script>
-		// NOTE : No sensitive data pwease
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Test Widget</title>
+    <script src="https://lpcdn.lpsnmedia.net/webagent/client-SDK.min.js"></script>
+    <style>
+      body {
+        background-color: #f8f9f9;
+      }
+    </style>
+  </head>
 
-		const placeForChatData = document.querySelector('#placeForChatData');
-		const pathToData = 'chatInfo.rtSessionId';
-		
-		
-		const getErrorMessagesBtn = document.querySelector('#getErrorMessages');
-		getErrorMessagesBtn.addEventListener('click', getErrorMessagesBtnClickHandler);
-		
-		
-		function getErrorMessagesBtnClickHandler (e) {
-			lpTag.agentSDK.get(pathToData, onSuccess, onError);
-		}
-		
-		function onSuccess(data) {
-			console.log(data);
-			
-			let content = '';
-
-			data.forEach(line => {
-				content+= line;
-			});
-
-			placeForChatData.innerHTML = content;
-		};
-
-		function onError(err) {
-			console.log(err);
-		};
-	</script>
-</body>
+  <body>
+    <h2>Exception Handling</h2>
+    <p><button id="getErrorMessages">Get Error Messages</button></p>
+    <p id="placeForChatData"></p>
+    <script src="getConvId.js"></script>
+  </body>
 </html>
